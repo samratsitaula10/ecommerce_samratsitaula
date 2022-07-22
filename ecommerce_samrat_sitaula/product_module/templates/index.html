@@ -1,105 +1,101 @@
 {% extends "base.html" %}
-{% block header %} <div class="text-white mt-4" style="font-size: 60px;"><u class="pt-2">Endless Products</u></div> {% endblock %}
 {% block content %}
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg">
-<div>
-<!-- Links -->
-<ul class="navbar-nav mr-auto">
-<li class="nav-item active">
-<a class="nav-link text-dark" href="/ ">All</a>
-</li>
-{% for category in categories %}
-<li class="nav-item">
-<a class="nav-link text-dark"
-href="/?category={{category.id}}">{{category.name}}</a>
-</li>
-{% endfor %}
-{% for brand in brands %}
-<li class="nav-item">
-<a class="nav-link text-dark"
-href="/?brand={{brand.id}}">{{brand.name}}</a>
-</li>
-{% endfor %}
-</ul>
-<!-- Links -->
-</div>
-<div>
-<form class="form-inline" method="POST">
-{% csrf_token %}
-<div>
-<input name="query" class="form-control" type="text"
-placeholder="Search/enter price-range" aria-label="Search"
-value="{{search_query}}">
-</div>
-</form>
-</div>
+<nav class="navbar navbar-expand-lg" style="font-size:20px">
+    <div>
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link text-dark" href="/ ">All</a>
+            </li>
+            {% for category in categories %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/?category={{category.id}}">{{category.name}}</a>
+            </li>
+            {% endfor %}
+            {% for brand in brands %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/?brand={{brand.id}}">{{brand.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- Links -->
+    </div>
+    <div>
+        <form class="form-inline" method="POST">
+            {% csrf_token %}
+            <div>
+                <input name="query" class="form-control" style="margin-left: 400%"  type="text" placeholder="Search Products"
+                    aria-label="Search" value="{{search_query}}">
+            </div>
+        </form>
+    </div>
 </nav>
 <!--/.Navbar-->
 {% for product in products %}
-<div class="row border bg-light">
-<div class="col-md-4">
-<div class="text-center">
-<img src="{{ product.image_url }}" style="height:200px;
-width:auto;" alt="{{ product.name }}">
-</div>
-</div>
-<div class="col-md-3">
-<span class="btn btn-danger disabled">{{ product.brand.name}}</span>
-<span class="btn btn-info disabled">{{ product.category.name}}</span>
-<h3>{{ product.name }}</h3>
-<h4 class="bold text-secondary">
-<strong>NRs. {{ product.price }}</strong>
-</h4>
-<form class="d-flex" action="/cart" method="GET">
-<!-- Default input -->
-<input type="hidden" name="id" value="{{product.id}}" />
+<div class="row border bg-light p-3">
+    <div class="col-md-6 row justify-content-center">
+        <img src="{{ product.image_url }}" style="height:300px;
+width:auto;" alt="{{ product.name }}" class="border">
+    </div>
+    <div class="col-md-2">
 
-<input type="number" name="qty" value="1" aria-
-label="Search" class="form-control" style="width: 100px">
+    </div>
+    <div class="col-md-3 text-center mt-4 border mb-2 p-3">
+        <span class="btn btn-primary disabled">{{ product.brand.name}}</span>
+        <span class="btn btn-danger disabled">{{ product.category.name}}</span>
+        <h3 class="mt-3">{{ product.name }}</h3>
+        <h4 class="bold text-secondary">
+            <strong>NRs. {{ product.price }}</strong>
+        </h4>
+        <form class="d-flex" action="/cart" method="GET" >
+            <!-- Default input -->
+            <input type="hidden" name="id" value="{{product.id}}" />
 
-<button id="btn-add-to-cart" class="btn btn-primary btn-md"
+            <input type="number" name="qty" value="1" aria- label="Search" class="form-control ml-5 text-center" style="width: 100px">
 
-type="submit" data-toggle="modal" data-target="#cart-model"><i class="fa fa-
-shopping-cart" aria-hidden="true"></i> Add to cart</button>
+            <button id="btn-add-to-cart" class="btn btn-primary btn-md" type="submit" data-toggle="modal"
+                data-target="#cart-model"><i class="fa fa-shopping-cart" aria-hidden="true"></i> &nbsp;&nbsp; ADD</button>
 
-</form>
-</div>
-<div class="col-md-5">
-<table class="table table-sm">
-<tr>
-<td>Available Quantity</td>
-<td>{{product.quantity}}</td>
-</tr>
-<tr>
-<td>Color Code</td>
-<td><div style="height: 25px; width: 25px; background-color: {{ product.color_code }};"></div></td>
+        </form>
+    </div>
+    <div class="container col-md-12 text-center" style="font-size: 20px; padding: 4px">
+        <table class="table table-sm">
+            <tr>
+                <td><b>Available Quantity</b></td>
+                <td>{{product.quantity}}</td>
+            </tr>
+            <tr>
+                <td><b>Color Code</td>
+                <td class="text-center">
+                    <div style="margin-left:48%; height: 25px; width: 25px; background-color: {{ product.color_code }};"></div>
+                </td>
 
-</tr>
-<tr>
-<td>Brand</td>
-<td>{{ product.brand.name }}</td>
-</tr>
-<tr>
-<td>Category</td>
-<td>{{ product.category.name }}</td>
-</tr>
-<tr>
-<td>Registered On</td>
-<td>{{ product.registered_on }}</td>
-</tr>
-<tr>
-<td>Is Active</td>
-<td>
-{% if product.is_active %}
-<input type="checkbox" checked />
-{% else %}
-<input type="checkbox" />
-{% endif %}
-</td>
-</tr>
-</table>
-</div>
+            </tr>
+            <tr>
+                <td><b>Brand</b></td>
+                <td>{{ product.brand.name }}</td>
+            </tr>
+            <tr>
+                <td><b>Category</b></td>
+                <td>{{ product.category.name }}</td>
+            </tr>
+            <tr>
+                <td><b>Registered On</b></td>
+                <td>{{ product.registered_on }}</td>
+            </tr>
+            <tr>
+                <td><b>Is Active</td>
+                <td>
+                    {% if product.is_active %}
+                    <input type="checkbox" checked />
+                    {% else %}
+                    <input type="checkbox" />
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 {% endfor %}
 {% endblock %}
