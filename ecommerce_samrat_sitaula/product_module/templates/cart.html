@@ -8,8 +8,7 @@
 
         <span class="text-muted"><i class="fa fa-shopping-cart" aria- hidden="true"></i> Your cart</span>
 
-        <span class="badge badge-secondary badge-
-pill">{{cart_items|length}}</span>
+        <span class="badge badge-secondary badge-pill">{{cart_items|length}}</span>
 
     </h4>
 </div>
@@ -27,8 +26,7 @@ pill">{{cart_items|length}}</span>
     <tbody>
         {% for item in cart_items %}
         <tr>
-            <td><img height="50" width="50" src="{{
-item.product.image_url }}" /></td>
+            <td><img height="50" width="50" src="{{item.product.image_url }}" /></td>
             <td>{{ item.product.name }}</td>
             <td>
                 <h5>NRs. {{ item.product.price }}</h5>
@@ -59,8 +57,7 @@ item.product.image_url }}" /></td>
                     {% csrf_token %}
                     <div class="input-group">
                         <input type="text" class="form-control" name="token" placeholder="Token" />
-                        <input type="hidden" name="amount" value="{{ total
-}}" />
+                        <input type="hidden" name="amount" value="{{ total }}" />
                         <button type="submit" class="btn btn-primary" type="submit"><i class="fa fa-shopping-cart"
                                 aria-hidden="true"></i>
                             Checkout Payment</button>
